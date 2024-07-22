@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <div class="off-canvas-overlay" data-toggle="sidebar"></div>
 <div class="sidebar-panel">
     <div class="brand">
@@ -21,13 +23,13 @@
                 <img src="../assets/images/avatar.jpg" class="avatar img-circle" alt="user" title="user" />
             </div>
             <div class="user-info expanding-hidden">
-                Betty Simmons
-                <small class="bold">Administrator</small>
+                <?php echo ucfirst($_SESSION['nama']) ?>
+                <small class="bold"><?php echo ucfirst($_SESSION['role']) ?></small>
             </div>
         </a>
         <div class="dropdown-menu">
             <!-- <div class="dropdown-divider"></div> -->
-            <a class="dropdown-item" href="">Logout</a>
+            <a class="dropdown-item" href="logout.php">Logout</a>
         </div>
     </div>
     <!-- main navigation -->

@@ -38,6 +38,39 @@ include '../config/database.php';
     <link rel="stylesheet" href="../assets/vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="../assets/styles/app.css" id="load_../assets/styles_before" />
     <link rel="stylesheet" href="../assets/styles/app.skins.css" />
+
+    <style>
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pr-3 {
+        padding-right: 1rem;
+        /* Adjust the value as needed */
+    }
+
+    .position-relative {
+        position: relative;
+    }
+
+    .position-absolute {
+        position: absolute;
+    }
+    </style>
     <!-- endbuild -->
 </head>
 
@@ -59,9 +92,10 @@ include '../config/database.php';
             <div class="main-content">
                 <div class="content-view">
                     <div class="card">
-                        <div class="card-header no-bg b-a-0">
+                        <div class="card-header no-bg b-a-0 position-relative m-b-1 m-t-1">
                             Data Karyawan
-                            <a href="tambah-karyawan.php" class="btn btn-primary btn-user">Tambah Karyawan</a>
+                            <a href="tambah-karyawan.php" class="btn btn-primary m-t-1 btn-user position-absolute"
+                                style="right: 1rem;">Tambah Karyawan</a>
                         </div>
                         <div class="card-block">
                             <div class="table-responsive">
@@ -131,12 +165,14 @@ include '../config/database.php';
                                                 ?>
                                             </td>
                                             <td><?php echo $kedisplinan . " kali ketidakhadiran tanpa izin." ?></td>
-                                            <td><?php echo $kerjasama . " kali ketidakhadiran terhadap tim di perusahaan" ?></td>
-                                            <td><?php echo $tanggung_jawab . " kali tidak menyelesaikan project pekerjaan" ?></td>
+                                            <td><?php echo $kerjasama . " kali ketidakhadiran terhadap tim di perusahaan" ?>
+                                            </td>
+                                            <td><?php echo $tanggung_jawab . " kali tidak menyelesaikan project pekerjaan" ?>
+                                            </td>
                                             <td><?php echo $kejujuran . " kali berperilaku tidak jujur"?></td>
                                             <td><?php echo $komunikasi . " kali jumlah kesalahan komunikasi" ?></td>
                                             <td>
-                                                <a href='edit-kriteria.php?GetID=<?php echo $id; ?>'
+                                                <a href='edit-karyawan.php?id=<?php echo $id; ?>'
                                                     style="text-decoration: none; list-style: none;">
                                                     <input type='submit' value='Ubah' id='editbtn'
                                                         class="btn btn-primary btn-user">
