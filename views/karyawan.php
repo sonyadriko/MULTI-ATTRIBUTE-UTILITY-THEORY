@@ -115,12 +115,26 @@ include '../config/database.php';
                                         <tr>
                                             <td><?php echo $no ?></td>
                                             <td><?php echo $nama ?></td>
-                                            <td><?php echo $lama_kerja ?></td>
-                                            <td><?php echo $kedisplinan ?></td>
-                                            <td><?php echo $kerjasama ?></td>
-                                            <td><?php echo $tanggung_jawab ?></td>
-                                            <td><?php echo $kejujuran ?></td>
-                                            <td><?php echo $komunikasi ?></td>
+                                            <td>
+                                                <?php 
+                                                    if ($lama_kerja == 1) {
+                                                        echo "1 bulan < 1 tahun Berkerja";
+                                                    } elseif ($lama_kerja == 2) {
+                                                        echo "> 1 tahun < 3 Tahun Berkerja";
+                                                    } elseif ($lama_kerja == 3) {
+                                                        echo "> 3 tahun < 5 Tahun Berkerja";
+                                                    } elseif ($lama_kerja == 4) {
+                                                        echo "> 5 tahun < 7 Tahun Berkerja";
+                                                    } else {
+                                                        echo $lama_kerja . " tahun";
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $kedisplinan . " kali ketidakhadiran tanpa izin." ?></td>
+                                            <td><?php echo $kerjasama . " kali ketidakhadiran terhadap tim di perusahaan" ?></td>
+                                            <td><?php echo $tanggung_jawab . " kali tidak menyelesaikan project pekerjaan" ?></td>
+                                            <td><?php echo $kejujuran . " kali berperilaku tidak jujur"?></td>
+                                            <td><?php echo $komunikasi . " kali jumlah kesalahan komunikasi" ?></td>
                                             <td>
                                                 <a href='edit-kriteria.php?GetID=<?php echo $id; ?>'
                                                     style="text-decoration: none; list-style: none;">

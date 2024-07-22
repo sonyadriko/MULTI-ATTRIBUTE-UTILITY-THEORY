@@ -59,6 +59,12 @@
                     <span>Penilaian</span>
                 </a>
             </li>
+            <li>
+                <a href="history.php">
+                    <i class="material-icons text-primary">History</i>
+                    <span>History</span>
+                </a>
+            </li>
 
             <!-- /charts -->
         </ul>

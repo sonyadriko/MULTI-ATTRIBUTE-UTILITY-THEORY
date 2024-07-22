@@ -58,6 +58,21 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../assets/styles/app.css" id="load_../assets/styles_before" />
     <link rel="stylesheet" href="../assets/styles/app.skins.css" />
     <!-- endbuild -->
+    <style>
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            margin-right: 10px;
+        }
+        .form-group input {
+            flex: 1;
+        }
+        .form-group p {
+            margin: 0 0 0 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -83,30 +98,77 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="card-block">
                             <form action="tambah-karyawan.php" method="post">
-                                <div class="form-group">
-                                    <label for="nama_karyawan">Nama Karyawan</label>
+                                <div class="form-group row">
+                                    <label for="nama_karyawan" class="col-sm-2 col-form-label">Nama Karyawan</label>
+                                    <div class="col-sm-10">
                                     <input type="text" class="form-control" id="nama_karyawan" name="nama_karyawan"
                                         required>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="lama_kerja">Lama Kerja</label>
-                                    <select class="form-control" id="lama_kerja" name="lama_kerja" required>
-                                        <option value="1">1 bulan < 1 tahun Berkerja</option>
-                                        <option value="2">> 1 tahun < 3 Tahun Berkerja</option>
-                                        <option value="3">> 3 tahun < 5 Tahun Berkerja</option>
-                                        <option value="4">> 5 tahun < 7 Tahun Berkerja</option>
-                                    </select>
+                                <div class="form-group row">
+                                    <label for="lama_kerja" class="col-sm-2 col-form-label">Lama Kerja</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="lama_kerja" name="lama_kerja" required>
+                                            <option value="1">1 bulan < 1 tahun Berkerja</option>
+                                            <option value="2">> 1 tahun < 3 Tahun Berkerja</option>
+                                            <option value="3">> 3 tahun < 5 Tahun Berkerja</option>
+                                            <option value="4">> 5 tahun < 7 Tahun Berkerja</option>
+                                        </select>
+                                    </div>
+                                    <!-- <input type="number" class="form-control" id="lama_kerja" name="lama_kerja" required> -->
                                 </div>
-                                <div class="form-group">
-                                    <label for="kedisplinan">Kedisiplinan</label>
-                                    <select class="form-control" id="kedisplinan" name="kedisplinan" required>
+                                <div class="form-group row">
+                                    <label for="kedisplinan" class="col-sm-2 col-form-label">Kedisiplinan</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="kedisplinan" name="kedisplinan" required>
+                                    </div>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <p>kali ketidakhadiran tanpa izin</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="kerjasama" class="col-sm-2 col-form-label">Kerjasama</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="kerjasama" name="kerjasama" required>
+                                    </div>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <p>kali ketidakhadiran terhadap tim di perusahaan</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="tanggung_jawab" class="col-sm-2 col-form-label">Tanggung Jawab</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="tanggung_jawab" name="tanggung_jawab" required>
+                                    </div>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <p>kali tidak menyelesaikan project pekerjaan</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="kejujuran" class="col-sm-2 col-form-label">Kejujuran</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="kejujuran" name="kejujuran" required>
+                                    </div>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <p>kali berperilaku tidak jujur</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="komunikasi" class="col-sm-2 col-form-label">Komunikasi</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="komunikasi" name="komunikasi" required>
+                                    </div>
+                                    <div class="col-sm-2 d-flex align-items-center">
+                                        <p>kali jumlah kesalahan komunikasi</p>
+                                    </div>
+                                </div>
+                                <!-- <select class="form-control" id="kedisplinan" name="kedisplinan" required>
                                         <option value="1">>= 7 kali ketidakhadiran tanpa izin</option>
                                         <option value="2">5-6 kali ketidakhadiran tanpa izin</option>
                                         <option value="3">3-4 kali ketidakhadiran tanpa izin</option>
                                         <option value="4">0-2 kali ketidakhadiran tanpa izin</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
+                                    </select> -->
+                                <!-- <div class="form-group">
                                     <label for="kerjasama">Kerjasama</label>
                                     <select class="form-control" id="kerjasama" name="kerjasama" required>
                                         <option value="1">>= 7 kali ketidakhadiran tim di perusahaan</option>
@@ -114,8 +176,8 @@ if (isset($_POST['submit'])) {
                                         <option value="3">3-4 kali ketidakhadiran tim di perusahaan</option>
                                         <option value="4">0-2 kali ketidakhadiran tim di perusahaan</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <!-- <div class="form-group">
                                     <label for="tanggung_jawab">Tanggung Jawab</label>
                                     <select class="form-control" id="tanggung_jawab" name="tanggung_jawab" required>
                                         <option value="1">>= 7 kali tidak menyelesaikan project pekerjaan</option>
@@ -123,8 +185,8 @@ if (isset($_POST['submit'])) {
                                         <option value="3">3-4 kali tidak menyelesaikan project pekerjaan</option>
                                         <option value="4">0-2 kali tidak menyelesaikan project pekerjaan</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <!-- <div class="form-group">
                                     <label for="kejujuran">Kejujuran</label>
                                     <select class="form-control" id="kejujuran" name="kejujuran" required>
                                         <option value="1">>= 7 kali tidak berperilaku tidak jujur</option>
@@ -132,8 +194,8 @@ if (isset($_POST['submit'])) {
                                         <option value="3">3-4 kali tidak berperilaku tidak jujur</option>
                                         <option value="4">0-2 kali tidak berperilaku tidak jujur</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <!-- <div class="form-group">
                                     <label for="komunikasi">Komunikasi</label>
                                     <select class="form-control" id="komunikasi" name="komunikasi" required>
                                         <option value="1">>= 7 kali jumlah kesalahan komunikasi</option>
@@ -141,7 +203,7 @@ if (isset($_POST['submit'])) {
                                         <option value="3">3-4 kali jumlah kesalahan komunikasi</option>
                                         <option value="4">0-2 kali jumlah kesalahan komunikasi</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                                 <a href="karyawan.php" class="btn btn-secondary">Batal</a>
                             </form>

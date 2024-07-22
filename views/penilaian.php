@@ -24,6 +24,12 @@ include '../config/database.php';
 
     <meta name="theme-color" content="#4C7FF0">
 
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+    <!-- SweetAlert JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     <title>Penilaian</title>
 
     <!-- page ../assets/stylesheets -->
@@ -39,6 +45,7 @@ include '../config/database.php';
     <link rel="stylesheet" href="../assets/styles/app.css" id="load_../assets/styles_before" />
     <link rel="stylesheet" href="../assets/styles/app.skins.css" />
     <!-- endbuild -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
 <body>
@@ -95,11 +102,71 @@ include '../config/database.php';
                                             <td><?php echo $no ?></td>
                                             <td><?php echo $nama ?></td>
                                             <td><?php echo $lama_kerja ?></td>
-                                            <td><?php echo $kedisplinan ?></td>
-                                            <td><?php echo $kerjasama ?></td>
-                                            <td><?php echo $tanggung_jawab ?></td>
-                                            <td><?php echo $kejujuran ?></td>
-                                            <td><?php echo $komunikasi ?></td>
+                                            <td>
+                                                <?php 
+                                                    if ($kedisplinan >= 0 && $kedisplinan <= 2) {
+                                                        echo 4;
+                                                    } elseif ($kedisplinan >= 3 && $kedisplinan <= 4) {
+                                                        echo 3;
+                                                    } elseif ($kedisplinan >= 5 && $kedisplinan <= 6) {
+                                                        echo 2;
+                                                    } elseif ($kedisplinan >= 7) {
+                                                        echo 1;
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if ($kerjasama >= 0 && $kerjasama <= 2) {
+                                                        echo 4;
+                                                    } elseif ($kerjasama >= 3 && $kerjasama <= 4) {
+                                                        echo 3;
+                                                    } elseif ($kerjasama >= 5 && $kerjasama <= 6) {
+                                                        echo 2;
+                                                    } elseif ($kerjasama >= 7) {
+                                                        echo 1;
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if ($tanggung_jawab >= 0 && $tanggung_jawab <= 2) {
+                                                        echo 4;
+                                                    } elseif ($tanggung_jawab >= 3 && $tanggung_jawab <= 4) {
+                                                        echo 3;
+                                                    } elseif ($tanggung_jawab >= 5 && $tanggung_jawab <= 6) {
+                                                        echo 2;
+                                                    } elseif ($tanggung_jawab >= 7) {
+                                                        echo 1;
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if ($kejujuran >= 0 && $kejujuran <= 2) {
+                                                        echo 4;
+                                                    } elseif ($kejujuran >= 3 && $kejujuran <= 4) {
+                                                        echo 3;
+                                                    } elseif ($kejujuran >= 5 && $kejujuran <= 6) {
+                                                        echo 2;
+                                                    } elseif ($kejujuran >= 7) {
+                                                        echo 1;
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php 
+                                                    if ($komunikasi >= 0 && $komunikasi <= 2) {
+                                                        echo 4;
+                                                    } elseif ($komunikasi >= 3 && $komunikasi <= 4) {
+                                                        echo 3;
+                                                    } elseif ($komunikasi >= 5 && $komunikasi <= 6) {
+                                                        echo 2;
+                                                    } elseif ($komunikasi >= 7) {
+                                                        echo 1;
+                                                    }
+                                                ?>
+                                            </td>
 
                                         </tr>
                                         <?php
@@ -118,7 +185,7 @@ include '../config/database.php';
                         </div>
                         <div class="card-block">
                             <div class="table-responsive">
-                                <table class="table table-bordered datatable">
+                                <table class="table table-bordered datatable2">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -152,14 +219,28 @@ include '../config/database.php';
                                             $max_kejujuran = 0;
                                             $max_komunikasi = 0;
 
+                                            // $max_lama_kerja = 4;
+                                            // $max_kedisplinan = 4;
+                                            // $max_kerjasama = 4;
+                                            // $max_tanggung_jawab = 4;
+                                            // $max_kejujuran = 4;
+                                            // $max_komunikasi = 4;
+
                                             // Cari nilai maksimal setiap kriteria
                                             while($row = mysqli_fetch_array($get_data)) {
-                                                if ($row['lama_kerja'] > $max_lama_kerja) $max_lama_kerja = $row['lama_kerja'];
-                                                if ($row['kedisplinan'] > $max_kedisplinan) $max_kedisplinan = $row['kedisplinan'];
-                                                if ($row['kerjasama'] > $max_kerjasama) $max_kerjasama = $row['kerjasama'];
-                                                if ($row['tanggung_jawab'] > $max_tanggung_jawab) $max_tanggung_jawab = $row['tanggung_jawab'];
-                                                if ($row['kejujuran'] > $max_kejujuran) $max_kejujuran = $row['kejujuran'];
-                                                if ($row['komunikasi'] > $max_komunikasi) $max_komunikasi = $row['komunikasi'];
+                                                $lama_kerja = floatval($row['lama_kerja']);
+                                                $kedisplinan = categorizeValue(floatval($row['kedisplinan']));
+                                                $kerjasama = categorizeValue(floatval($row['kerjasama']));
+                                                $tanggung_jawab = categorizeValue(floatval($row['tanggung_jawab']));
+                                                $kejujuran = categorizeValue(floatval($row['kejujuran']));
+                                                $komunikasi = categorizeValue(floatval($row['komunikasi']));
+
+                                                if ($lama_kerja > $max_lama_kerja) $max_lama_kerja = $lama_kerja;
+                                                if ($kedisplinan > $max_kedisplinan) $max_kedisplinan = $kedisplinan;
+                                                if ($kerjasama > $max_kerjasama) $max_kerjasama = $kerjasama;
+                                                if ($tanggung_jawab > $max_tanggung_jawab) $max_tanggung_jawab = $tanggung_jawab;
+                                                if ($kejujuran > $max_kejujuran) $max_kejujuran = $kejujuran;
+                                                if ($komunikasi > $max_komunikasi) $max_komunikasi = $komunikasi;
                                             }
 
                                             // Reset pointer ke awal
@@ -179,11 +260,22 @@ include '../config/database.php';
                                                 $kejujuran = $display['kejujuran'];
                                                 $komunikasi = $display['komunikasi'];
 
+                                                $kedisplinan = categorizeValue($kedisplinan);
+                                                $kerjasama = categorizeValue($kerjasama);
+                                                $tanggung_jawab = categorizeValue($tanggung_jawab);
+                                                $kejujuran = categorizeValue($kejujuran);
+                                                $komunikasi = categorizeValue($komunikasi);
+                                                // var_dump($kedisplinan);
+
                                                 // Normalisasi nilai kriteria
                                                 $normalized_lama_kerja = ($lama_kerja-1) / ($max_lama_kerja-1);                                        
                                                 $normalized_kedisplinan = ($kedisplinan-2) / ($max_kedisplinan-2);
                                                 $normalized_kerjasama = ($kerjasama-2) / ($max_kerjasama-2);
                                                 $normalized_tanggung_jawab = ($tanggung_jawab-2) / ($max_tanggung_jawab-2);
+                                                // var_dump($normalized_tanggung_jawab);
+                                                // var_dump($tanggung_jawab-2);
+                                                // var_dump($max_tanggung_jawab-2);
+                                                // echo "<br>";
                                                 $normalized_kejujuran = ($kejujuran-2) / ($max_kejujuran-2);
                                                 $normalized_komunikasi = ($komunikasi-1) / ($max_komunikasi-1);
 
@@ -217,6 +309,18 @@ include '../config/database.php';
                                                 $no++;
                                             }
 
+                                            function categorizeValue($value) {
+                                                if ($value >= 0 && $value <= 2) {
+                                                    return 4;
+                                                } elseif ($value >= 3 && $value <= 4) {
+                                                    return 3;
+                                                } elseif ($value >= 5 && $value <= 6) {
+                                                    return 2;
+                                                } else {
+                                                    return 1;
+                                                }
+                                            }
+
                                             // Sort array utilitas berdasarkan nilai_utilitas dari terbesar ke terkecil
                                             usort($utilitas, function($a, $b) {
                                                 return $b['nilai_utilitas'] <=> $a['nilai_utilitas'];
@@ -242,6 +346,7 @@ include '../config/database.php';
                         </div>
                         <div class="card-block">
                             <div class="table-responsive">
+                            <form method="POST" action="save_ranking.php">
                                 <table class="table table-bordered datatable">
                                     <thead>
                                         <tr>
@@ -252,20 +357,23 @@ include '../config/database.php';
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php 
+                                        <?php
                                             $no = 1;
-                                            foreach ($utilitas as $row) {
+                                            foreach ($utilitas as $data) {
                                                 echo "<tr>
                                                         <td>$no</td>
-                                                        <td>{$row['nama']}</td>
-                                                        <td>".number_format($row['nilai_utilitas'], 2)."</td>
-                                                        <td>{$row['ranking']}</td>
-                                                      </tr>";
+                                                        <td>{$data['nama']}</td>
+                                                        <td>".number_format($data['nilai_utilitas'], 2)."</td>
+                                                        <input type='hidden' name='nama[]' value='{$data['nama']}'>
+                                                        <input type='hidden' name='nilai_utilitas[]' value='{$data['nilai_utilitas']}'>
+                                                    </tr>";
                                                 $no++;
                                             }
-                                        ?>
+                                            ?>
                                     </tbody>
                                 </table>
+                                <button type="submit" class="btn btn-primary" name="save_ranking">Save</button>
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -291,8 +399,30 @@ include '../config/database.php';
     <!-- initialize page scripts -->
     <script type="text/javascript">
     $('.datatable').DataTable({});
+    $('.datatable2').DataTable({});
     </script>
     <!-- end initialize page scripts -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            
+            if (status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Data has been saved successfully!'
+                });
+            } else if (status === 'fail') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to save data!'
+                });
+            }
+        });
+    </script>
 
 </body>
 
