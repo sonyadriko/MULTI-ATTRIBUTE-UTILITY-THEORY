@@ -43,6 +43,7 @@
                     <span>Home</span>
                 </a>
             </li>
+            <?php if($_SESSION['role'] == 'admin'){ ?>
             <li>
                 <a href="kriteria.php">
                     <i class="material-icons text-primary">Kriteria</i>
@@ -61,6 +62,7 @@
                     <span>Penilaian</span>
                 </a>
             </li>
+            <?php } ?>
             <li>
                 <a href="history.php">
                     <i class="material-icons text-primary">History</i>

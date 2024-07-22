@@ -177,6 +177,11 @@ include '../config/database.php';
                                                     <input type='submit' value='Ubah' id='editbtn'
                                                         class="btn btn-primary btn-user">
                                                 </a>
+                                                <a href='delete_karyawan.php?Del=<?php echo $id; ?>'
+                                                    style="text-decoration: none; list-style: none;">
+                                                    <input type='submit' value='Delete' id='deletebtn'
+                                                        class="btn btn-danger btn-user">
+                                                </a>
                                             </td>
                                         </tr>
                                         <?php
