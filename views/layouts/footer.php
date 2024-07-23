@@ -11,10 +11,10 @@
             <li>
                 <a href="javascript:;">
                     <span>Copyright</span>
-                    &copy; 2016 Your App
+                    &copy; 2024 Multi Attribute Utility Theory
                 </a>
             </li>
-            <li class="hidden-md-down">
+            <!-- <li class="hidden-md-down">
                 <a href="javascript:;">Privacy</a>
             </li>
             <li class="hidden-md-down">
@@ -22,7 +22,7 @@
             </li>
             <li class="hidden-md-down">
                 <a href="javascript:;">help</a>
-            </li>
+            </li> -->
         </ul>
     </nav>
 </div>
