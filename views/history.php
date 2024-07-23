@@ -82,9 +82,9 @@ include '../config/database.php';
                                     <?php 
                                             $no = 1;
                                             $total_bobot = 0;
-                                            $get_data = mysqli_query($conn, "select * from history");
+                                            $get_data = mysqli_query($conn, "select * from hasil");
                                             while($display = mysqli_fetch_array($get_data)) {
-                                                $id = $display['id_history'];
+                                                $id = $display['id_hasil'];
                                                 $time = $display['date'];
                                         ?>
                                     <tr>

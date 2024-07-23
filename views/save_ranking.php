@@ -30,7 +30,7 @@ include '../config/database.php';
 
 if (isset($_POST['save_ranking'])) {
     // Insert into history table
-    $insert_history = "INSERT INTO history () VALUES ()";
+    $insert_history = "INSERT INTO hasil () VALUES ()";
     mysqli_query($conn, $insert_history);
     $id_history = mysqli_insert_id($conn);
 
@@ -41,7 +41,7 @@ if (isset($_POST['save_ranking'])) {
         $nilai_utilitas = $_POST['nilai_utilitas'][$i];
         $ranking = $i + 1;
 
-        $insert_detail = "INSERT INTO history_detail (id_history, nama, nilai_utilitas, ranking) 
+        $insert_detail = "INSERT INTO hasil_detail (id_hasil, nama, nilai_utilitas, ranking) 
                           VALUES ('$id_history', '$nama', '$nilai_utilitas', '$ranking')";
         if (!mysqli_query($conn, $insert_detail)) {
             $success = false;
@@ -68,4 +68,3 @@ if (isset($_POST['save_ranking'])) {
     exit();
 }
 ?>
-

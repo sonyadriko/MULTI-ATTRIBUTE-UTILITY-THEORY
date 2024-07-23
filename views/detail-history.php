@@ -5,7 +5,7 @@ if (isset($_GET['GetID'])) {
     $id_history = $_GET['GetID'];
 
     // Ambil data history detail berdasarkan id_history
-    $get_history_detail = mysqli_query($conn, "SELECT * FROM history_detail WHERE id_history = '$id_history'");
+    $get_history_detail = mysqli_query($conn, "SELECT * FROM hasil_detail WHERE id_hasil = '$id_history'");
 } else {
     // Redirect to history page if no ID is provided
     header('Location: history.php');

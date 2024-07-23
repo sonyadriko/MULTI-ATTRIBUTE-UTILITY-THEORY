@@ -127,7 +127,7 @@ include '../config/database.php';
                                                 komunikasi
                                             </th>
                                             <th>
-                                                Action
+                                                Aksi
                                             </th>
 
                                         </tr>
