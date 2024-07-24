@@ -96,11 +96,11 @@ include '../config/database.php';
                                                 <input type='submit' value='Detail' id='detailbtn'
                                                     class="btn btn-primary btn-user">
                                             </a>
-                                            <a href='delete_history.php?Del=<?php echo $id; ?>'
+                                            <!-- <a href='delete_history.php?Del=<?php echo $id; ?>'
                                                 style="text-decoration: none; list-style: none;">
                                                 <input type='submit' value='Delete' id='deletebtn'
                                                     class="btn btn-danger btn-user">
-                                            </a>
+                                            </a> -->
                                         </td>
                                     </tr>
                                     <?php
