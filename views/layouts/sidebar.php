@@ -50,26 +50,26 @@ if (!isset($_SESSION['id_users'])) {
             <?php if($_SESSION['role'] == 'admin'){ ?>
             <li>
                 <a href="kriteria.php">
-                    <i class="material-icons text-primary">Kriteria</i>
+                    <i class="material-icons text-primary">assignment</i>
                     <span>Kriteria</span>
                 </a>
             </li>
             <li>
                 <a href="karyawan.php">
-                    <i class="material-icons text-primary">Karyawan</i>
+                    <i class="material-icons text-primary">people</i>
                     <span>Karyawan</span>
                 </a>
             </li>
             <li>
-                <a href="penilaian.php">
-                    <i class="material-icons text-primary">Penilaian</i>
+                <a href="cek_hitung.php">
+                    <i class="material-icons text-primary">rate_review</i>
                     <span>Penilaian</span>
                 </a>
             </li>
             <?php } ?>
             <li>
                 <a href="history.php">
-                    <i class="material-icons text-primary">History</i>
+                    <i class="material-icons text-primary">history</i>
                     <span>History</span>
                 </a>
             </li>

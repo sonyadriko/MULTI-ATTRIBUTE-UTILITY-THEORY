@@ -4,6 +4,16 @@ include '../config/database.php';
 // if (!isset($_SESSION['id_users'])) {
 //     header('Location: login.php');
 // }
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    // Check if any checkboxes are selected
+    if (!empty($_POST['selected_items'])) {
+        // Redirect to hitung1.php with selected id_penilaian values
+        $selected_ids = implode(",", $_POST['selected_items']);
+        header("Location: penilaian1.php?id_karyawan=$selected_ids");
+        exit;
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,7 +22,7 @@ include '../config/database.php';
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" />
     <meta name="msapplication-tap-highlight" content="no">
 
     <meta name="mobile-web-app-capable" content="yes">
@@ -24,10 +34,10 @@ include '../config/database.php';
 
     <meta name="theme-color" content="#4C7FF0">
 
-    <title>Karyawan</title>
+    <title>Penilaian</title>
 
     <!-- page ../assets/stylesheets -->
-    <link rel="stylesheet" href="../assets/vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="../assets/stylesheet" href="../assets/vendor/bower-jvectormap/jquery-jvectormap-1.2.2.css" />
     <link rel="stylesheet" href="../assets/vendor/datatables/media/css/dataTables.bootstrap4.css">
     <!-- end page ../assets/stylesheets -->
 
@@ -38,51 +48,11 @@ include '../config/database.php';
     <link rel="stylesheet" href="../assets/vendor/animate.css/animate.css" />
     <link rel="stylesheet" href="../assets/styles/app.css" id="load_../assets/styles_before" />
     <link rel="stylesheet" href="../assets/styles/app.skins.css" />
-    <!-- endbuild -->
 
     <style>
-    .d-flex {
-        display: flex;
-    }
 
-    .justify-content-between {
-        justify-content: space-between;
-    }
-
-    .align-items-center {
-        align-items: center;
-    }
-
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .pr-3 {
-        padding-right: 1rem;
-    }
-
-    .position-relative {
-        position: relative;
-    }
-
-    .position-absolute {
-        position: absolute;
-    }
-
-    @media (max-width: 768px) {
-        .card-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .card-header .btn {
-            margin-top: 10px;
-        }
-    }
     </style>
+    <!-- endbuild -->
 </head>
 
 <body>
@@ -91,11 +61,12 @@ include '../config/database.php';
         <!--sidebar panel-->
         <?php include 'layouts/sidebar.php' ?>
         <!-- /sidebar panel -->
-
         <!-- content panel -->
+
         <div class="main-panel">
             <!-- top header -->
             <?php include 'layouts/header.php' ?>
+
             <!-- /top header -->
 
             <!-- main area -->
@@ -104,29 +75,47 @@ include '../config/database.php';
                     <div class="card">
                         <div class="card-header no-bg b-a-0 position-relative m-b-1 m-t-1">
                             Data Karyawan
-                            <a href="tambah-karyawan.php" class="btn btn-primary m-t-1 btn-user position-absolute"
-                                style="right: 1rem;">Tambah Karyawan</a>
                         </div>
                         <div class="card-block">
-                            <div class="table-responsive">
-                                <table class="table table-bordered datatable">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Nama Karyawan</th>
-                                            <th>Lama kerja</th>
-                                            <th>Kedisiplinan</th>
-                                            <th>Kerjasama</th>
-                                            <th>Tanggung Jawab</th>
-                                            <th>Kejujuran</th>
-                                            <th>Komunikasi</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Nama Karyawan
+                                                </th>
+                                                <th>
+                                                    Lama kerja
+                                                </th>
+                                                <th>
+                                                    Kedisiplinan
+                                                </th>
+                                                <th>
+                                                    Kerjasama
+                                                </th>
+                                                <th>
+                                                    tanggung jawab
+                                                </th>
+                                                <th>
+                                                    kejujuran
+                                                </th>
+                                                <th>
+                                                    komunikasi
+                                                </th>
+                                                <th>
+                                                    Aksi
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
                                             $no = 1;
-                                            $get_data = mysqli_query($conn, "SELECT * FROM karyawan");
+                                            $get_data = mysqli_query($conn, "select * from karyawan");
                                             while($display = mysqli_fetch_array($get_data)) {
                                                 $id = $display['id_karyawan'];
                                                 $nama = $display['nama_karyawan'];
@@ -137,11 +126,11 @@ include '../config/database.php';
                                                 $kejujuran = $display['kejujuran'];
                                                 $komunikasi = $display['komunikasi'];
                                         ?>
-                                        <tr>
-                                            <td><?php echo $no ?></td>
-                                            <td><?php echo $nama ?></td>
-                                            <td>
-                                                <?php 
+                                            <tr>
+                                                <td><?php echo $no ?></td>
+                                                <td><?php echo $nama ?></td>
+                                                <td>
+                                                    <?php 
                                                     if ($lama_kerja == 1) {
                                                         echo "1 bulan < 1 tahun Berkerja";
                                                     } elseif ($lama_kerja == 2) {
@@ -154,28 +143,30 @@ include '../config/database.php';
                                                         echo $lama_kerja . " tahun";
                                                     }
                                                 ?>
-                                            </td>
-                                            <td><?php echo $kedisplinan . " kali ketidakhadiran tanpa izin." ?></td>
-                                            <td><?php echo $kerjasama . " kali ketidakhadiran terhadap tim di perusahaan" ?>
-                                            </td>
-                                            <td><?php echo $tanggung_jawab . " kali tidak menyelesaikan project pekerjaan" ?>
-                                            </td>
-                                            <td><?php echo $kejujuran . " kali berperilaku tidak jujur" ?></td>
-                                            <td><?php echo $komunikasi . " kali jumlah kesalahan komunikasi" ?></td>
-                                            <td>
-                                                <a href='edit-karyawan.php?id=<?php echo $id; ?>'
-                                                    class="btn btn-primary btn-user">Ubah</a>
-                                                <a href='delete_karyawan.php?Del=<?php echo $id; ?>'
-                                                    class="btn btn-danger btn-user">Hapus</a>
-                                            </td>
-                                        </tr>
-                                        <?php
+                                                </td>
+                                                <td><?php echo $kedisplinan . " kali ketidakhadiran tanpa izin." ?></td>
+                                                <td><?php echo $kerjasama . " kali ketidakhadiran terhadap tim di perusahaan" ?>
+                                                </td>
+                                                <td><?php echo $tanggung_jawab . " kali tidak menyelesaikan project pekerjaan" ?>
+                                                </td>
+                                                <td><?php echo $kejujuran . " kali berperilaku tidak jujur"?></td>
+                                                <td><?php echo $komunikasi . " kali jumlah kesalahan komunikasi" ?></td>
+                                                <td>
+                                                    <input type="checkbox" name="selected_items[]"
+                                                        value="<?php echo $id ?>" class="action-checkbox">
+
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php
                                                 $no++;
                                             }
                                         ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <input type="submit" name="submit" value="Hitung" class="btn btn-primary btn-user">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -196,15 +187,7 @@ include '../config/database.php';
     <script src="../assets/vendor/datatables/media/js/dataTables.bootstrap4.js"></script>
     <!-- end page scripts -->
 
-    <!-- initialize page scripts -->
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.datatable').DataTable({
-            responsive: true
-        });
-    });
-    </script>
-    <!-- end initialize page scripts -->
+
 
 </body>
 
