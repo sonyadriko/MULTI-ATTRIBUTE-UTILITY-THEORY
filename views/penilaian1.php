@@ -294,8 +294,8 @@ if ($selected_ids) {
                                                 // Array untuk menyimpan hasil utilitas
                                                 $utilitas = array();
 
-                                                var_dump($min_lama_kerja);                                  
-                                                var_dump($max_lama_kerja);  
+                                                // var_dump($min_lama_kerja);                                  
+                                                // var_dump($max_lama_kerja);  
 
 
                                                 // Tampilkan data dan hitung utilitas
@@ -316,15 +316,33 @@ if ($selected_ids) {
                                                     $komunikasi = categorizeValue($komunikasi);
                                                     // var_dump($kedisplinan);
 
+                                                    // // Normalisasi nilai kriteria
+                                                    // $normalized_lama_kerja = ($lama_kerja-$min_lama_kerja) / ($max_lama_kerja-$min_lama_kerja);                          
+                                                    // $normalized_kedisplinan = ($kedisplinan-$min_kedisplinan) / ($max_kedisplinan-$min_kedisplinan);
+                                                    // $normalized_kerjasama = ($kerjasama-$min_kerjasama) / ($max_kerjasama-$min_kerjasama);
+                                                    // $normalized_tanggung_jawab = ($tanggung_jawab-$min_tanggung_jawab) / ($max_tanggung_jawab-$min_tanggung_jawab);
+                                                    // $normalized_kejujuran = ($kejujuran-$min_kejujuran) / ($max_kejujuran-$min_kejujuran);
+                                                    // $normalized_komunikasi = ($komunikasi-$min_komunikasi) / ($max_komunikasi-$min_komunikasi);
+
                                                     // Normalisasi nilai kriteria
-                                                    $normalized_lama_kerja = ($lama_kerja-$min_lama_kerja) / ($max_lama_kerja-$min_lama_kerja); 
-                                                    // var_dump($normalized_lama_kerja);                                  
-                                                                                   
-                                                    $normalized_kedisplinan = ($kedisplinan-$min_kedisplinan) / ($max_kedisplinan-$min_kedisplinan);
-                                                    $normalized_kerjasama = ($kerjasama-$min_kerjasama) / ($max_kerjasama-$min_kerjasama);
-                                                    $normalized_tanggung_jawab = ($tanggung_jawab-$min_tanggung_jawab) / ($max_tanggung_jawab-$min_tanggung_jawab);
-                                                    $normalized_kejujuran = ($kejujuran-$min_kejujuran) / ($max_kejujuran-$min_kejujuran);
-                                                    $normalized_komunikasi = ($komunikasi-$min_komunikasi) / ($max_komunikasi-$min_komunikasi);
+                                                    $normalized_lama_kerja = ($max_lama_kerja - $min_lama_kerja) != 0 ? 
+                                                    ($lama_kerja - $min_lama_kerja) / ($max_lama_kerja - $min_lama_kerja) : 0;
+
+                                                    $normalized_kedisplinan = ($max_kedisplinan - $min_kedisplinan) != 0 ? 
+                                                    ($kedisplinan - $min_kedisplinan) / ($max_kedisplinan - $min_kedisplinan) : 0;
+
+                                                    $normalized_kerjasama = ($max_kerjasama - $min_kerjasama) != 0 ? 
+                                                    ($kerjasama - $min_kerjasama) / ($max_kerjasama - $min_kerjasama) : 0;
+
+                                                    $normalized_tanggung_jawab = ($max_tanggung_jawab - $min_tanggung_jawab) != 0 ? 
+                                                    ($tanggung_jawab - $min_tanggung_jawab) / ($max_tanggung_jawab - $min_tanggung_jawab) : 0;
+
+                                                    $normalized_kejujuran = ($max_kejujuran - $min_kejujuran) != 0 ? 
+                                                    ($kejujuran - $min_kejujuran) / ($max_kejujuran - $min_kejujuran) : 0;
+
+                                                    $normalized_komunikasi = ($max_komunikasi - $min_komunikasi) != 0 ? 
+                                                    ($komunikasi - $min_komunikasi) / ($max_komunikasi - $min_komunikasi) : 0;
+
 
                                                     // Hitung nilai utilitas
                                                     $nilai_utilitas = ($normalized_lama_kerja * ($bobot_kriteria[0]/100)) +
