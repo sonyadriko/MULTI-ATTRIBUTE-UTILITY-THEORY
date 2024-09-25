@@ -1,9 +1,103 @@
 <?php
 include '../config/database.php';
-// session_start();
-// if (!isset($_SESSION['id_users'])) {
-//     header('Location: login.php');
-// }
+
+
+require '../vendor/autoload.php'; // Make sure this path is correct
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Row;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['import'])) {
+        // Process the uploaded Excel file for import
+        if (isset($_FILES['excelFile'])) {
+            $fileError = $_FILES['excelFile']['error'];
+            if ($fileError == UPLOAD_ERR_OK) {
+                $excelFile = $_FILES['excelFile']['tmp_name'];
+
+                try {
+                    // Load the Excel file
+                    $spreadsheet = IOFactory::load($excelFile);
+                    $worksheet = $spreadsheet->getActiveSheet();
+
+                    // Prepare the statement for inserting data into the 'handphone' table
+                    $stmtInsert = $conn->prepare('INSERT INTO karyawan (nama_karyawan, lama_kerja, kedisplinan, kerjasama, tanggung_jawab, kejujuran, komunikasi) VALUES (?, ?, ?, ?, ?, ?, ?)');
+
+                    // Initialize variable for counting successful inserts
+                    $successCount = 0;
+
+                    // Iterate through rows and insert data into the 'handphone' table
+                    // Proses iterasi pada setiap baris Excel
+                    foreach ($worksheet->getRowIterator() as $row) {
+                        $rowData = [];
+                        foreach ($row->getCellIterator() as $cell) {
+                            $rowData[] = $cell->getValue();
+                        }
+
+                        // Menyesuaikan jumlah kolom dari Excel
+                        if (count($rowData) == 7) {
+                            $nama = $rowData[0];  // Nama
+                            $lama_kerja = $rowData[1];  // K1
+                            $kedisplinan = $rowData[2]; // K2
+                            $kerjasama = $rowData[3];   // K3
+                            $tanggung_jawab = $rowData[4];  // K4
+                            $kejujuran = $rowData[5];   // K5
+                            $komunikasi = $rowData[6];  // K6
+
+                            // Bind parameter
+                            $stmtInsert->bind_param('sssssss', $nama, $lama_kerja, $kedisplinan, $kerjasama, $tanggung_jawab, $kejujuran, $komunikasi);
+                            
+                            if ($stmtInsert->execute()) {
+                                $successCount++;
+                            }
+                        }
+                    }
+                    // Check if any data was successfully inserted
+                    if ($successCount > 0) {
+                        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                        echo "<script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Import successful!',
+                                    text: 'Total $successCount rows inserted.',
+                                    showConfirmButton: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = 'karyawan.php';
+                                    }
+                                });
+                            });
+                        </script>";
+                    } else {
+                        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                        echo "<script>
+                         document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'No data inserted',
+                                    text: 'Please check your file and try again.',
+                                    showConfirmButton: true
+                                });
+                                });
+                              </script>";
+                    }
+                    
+
+                    // exit();
+                } catch (Exception $e) {
+                    echo '<script>alert("Error processing the file: ' . $e->getMessage() . '");</script>';
+                }
+            } else {
+                echo '<script>alert("Error uploading the file.");</script>';
+            }
+        } else {
+            echo '<script>alert("No file uploaded.");</script>';
+        }
+    }
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -103,13 +197,32 @@ include '../config/database.php';
                 <div class="content-view">
                     <div class="card">
                         <div class="card-header no-bg b-a-0 position-relative m-b-1 m-t-1">
+                            Upload Data Training
+                        </div>
+                        <div class="card-block">
+                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"
+                                enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="excelFile" class="form-label">Choose Excel File</label>
+                                    <input type="file" class="form-control" id="excelFile" name="excelFile"
+                                        accept=".xls, .xlsx" required>
+                                    <div id="fileError" class="invalid-feedback"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="import">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card">
+
+                        <div class="card-header no-bg b-a-0 position-relative m-b-1 m-t-1">
                             Data Karyawan
                             <a href="tambah-karyawan.php" class="btn btn-primary m-t-1 btn-user position-absolute"
                                 style="right: 1rem;">Tambah Karyawan</a>
                         </div>
+                        <!-- File Upload Form -->
                         <div class="card-block">
-                            <div class="table-responsive">
-                                <table class="table table-bordered datatable">
+                            <div class="table-responsive mt-4">
+                                <table class="table table-bordered datatable mt-4">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -194,6 +307,7 @@ include '../config/database.php';
     <!-- page scripts -->
     <script src="../assets/vendor/datatables/media/js/jquery.dataTables.js"></script>
     <script src="../assets/vendor/datatables/media/js/dataTables.bootstrap4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <!-- end page scripts -->
 
     <!-- initialize page scripts -->
